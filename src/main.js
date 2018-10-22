@@ -21,7 +21,7 @@ $(document).ready(function() {
             if (body.data.length === 0) {
               $("#errors").text("There were no doctors.");
             }else{
-              for(let i=0; i<10; i++) {
+              for(let i=0; i<body.data.length; i++) {
                 
                 let first_name = body.data[i].profile.first_name;
                 let last_name = body.data[i].profile.last_name;
@@ -30,12 +30,12 @@ $(document).ready(function() {
                 let phone = body.data[i].practices[0].phones[0].number;
                 let acceptPatients = body.data[i].practices[0].accepts_new_patients;
                   $("#doctorList").append(`
-                  <li> 
-                  <p>Name: ${first_name + last_name}</p>
+                   
+                  <p>Name: ${first_name +' '+ last_name}</p>
                   <p>Address: ${address}</p>
                   <p>Phone: ${phone} </p>
                   <p>Accepting new patients:${acceptPatients} </p>
-                  </li><hr/>`);
+                  <hr/>`);
 
             }
               
