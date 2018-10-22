@@ -11,22 +11,22 @@ $(document).ready(function() {
         let issue = $("#issue").val();
         let name = $("#name").val();
 
-        let doctorLookUp = new DoctorLookUp(issue, name);
+        let doctorLookUp = new DoctorLookUp(issue,name);
         let promise = doctorLookUp.lookUp();
-
         promise.then(function(response) {
           $("#doctorList").empty();
           $("#errors").empty();
             let body = JSON.parse(response);
-
+            console.log(body);
             if (body.data.length === 0) {
               $("#errors").text("There were no doctors.");
-            }
-              for(let i=0; i<(body.data[i]).length -1; i++) {
+            }else{
+              for(let i=0; i<10; i++) {
+                
                 let first_name = body.data[i].profile.first_name;
                 let last_name = body.data[i].profile.last_name;
-                let address = `{body.data[i].practices[0].visit_address.street}
-                 {body.data[i].practices[0].visit_address.city}`;
+                let address = `${body.data[i].practices[0].visit_address.street}
+                 ${body.data[i].practices[0].visit_address.city}`;
                 let phone = body.data[i].practices[0].phones[0].number;
                 let acceptPatients = body.data[i].practices[0].accepts_new_patients;
                   $("#doctorList").append(`
@@ -35,11 +35,14 @@ $(document).ready(function() {
                   <p>Address: ${address}</p>
                   <p>Phone: ${phone} </p>
                   <p>Accepting new patients:${acceptPatients} </p>
-                  </li>`);
+                  </li><hr/>`);
+
+            }
+              
               }
             },
             function(error){
-              $(".showErrors").text(`There was an error processing your request. Error Msg: ${error}`);
+              $(".errors").text(`There was an error processing your request. Error Msg: ${error}`);
             });
           });
         });
